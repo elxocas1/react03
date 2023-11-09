@@ -3,10 +3,13 @@ import React from 'react'
 const C01componente = () => {
   return (
     <div>
-      <h1>Componente 1</h1>
-      Pagina de prueba
+      <h1>componente01 </h1>
+      PAGINA DE PRUEBA
     </div>
   )
 }
 
 export default C01componente
+
+
+

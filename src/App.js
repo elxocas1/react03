@@ -1,48 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
-//import C01componente from './components/C01componente';
-//import Variable from './components/C04variable';
-import AppForm from './components/AppForm';
-import { db } from "./firebase/firebase";
-import { useState } from 'react';
-import { onSnapshot, query, collection, getDocs, doc, deleteDoc, where} from 'firebase/firestore';
-//import MatrizOperaciones from './components/P7matrizOperaciones';
 
+import { useState } from 'react';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import Dashboard from './public/Dashboard';
+import Home from './public/Home';
+import PublicRutas from './ruteo/PublicRutas';
+import { useAuth } from './ruteo/AuthContext';
+import ProtectedRutas from './ruteo/ProtectedRutas';
 
 function App() {
-
-  ///// READ - LECTURA - fnRead //////
-  const [docBD, setDocsBD] = useState([]);
-  const fnRead = () => {
-      const xColeccionConQuery = query(collection(db, "persona"));
-      const unsubscribe = onSnapshot(xColeccionConQuery, (xDatosBD) => {
-        const xDoc = [];
-        xDatosBD.forEach( (doc) => {
-          xDoc.push({id: doc.id, ...doc.data()});
-          //console({id: doc.id, ...doc.data()});
-        });
-        setDocsBD(xDoc);
-      });
-  }
-  fnRead();
-  //console.log(docBD);
-  ///// DELETE - ELIMINAR - fnDelete /////
-  const [idActual, setIdActual] = useState("");
-  const fnDelete =(xId) =>{
-  }
-  
+ 
+ const { user} = useAuth();
   return (
-    <div style={{background:"blue", width:"350px",padding:"10px"}}>
-      <AppForm {...{idActual}} />
-      <i class="material-icons">insert_chart</i>
+    <div style={{background:"plum"}}>
 
-      <p>1. Juan Manuel 23 Masculino  ---- x -  A</p>
-      <p>2. Rosa Maria  25 Femenino   ---- x -  A</p>
-      <p>3. Luis Miguel 40 Masculino  ---- x -  A</p>
+      <Router> 
+        {user ? <ProtectedRutas /> : <PublicRutas/>}
       
+      </Router>
+
     </div>
   );
 }
 
 
 export default App;
+
